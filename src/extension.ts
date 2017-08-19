@@ -1,29 +1,66 @@
-'use strict';
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext) 
+{
+    console.log('Exception Formatter Activated.');
 
-    // Use the console to output diagnostic information (console.log) and errors (console.error)
-    // This line of code will only be executed once when your extension is activated
-    console.log('Congratulations, your extension "exception-formatter" is now active!');
+    vscode.commands.registerCommand('extension.formatException', () => {
+        const {activeTextEditor} = vscode.window;
+    
+        if (activeTextEditor && activeTextEditor.document.languageId === 'plaintext') {
+            const {document} = activeTextEditor;
+            const unformattedException = document.getText();
 
-    // The command has been defined in the package.json file
-    // Now provide the implementation of the command with  registerCommand
-    // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        // The code you place here will be executed every time your command is executed
+            const formattedException = ExceptionFormatter.format(unformattedException);
 
-        // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
+            const edit = new vscode.WorkspaceEdit();
+            edit.delete(document.uri, new vscode.Range(document.positionAt(0), document.positionAt(unformattedException.length)));
+            edit.insert(document.uri, document.positionAt(0), formattedException)
+
+            return vscode.workspace.applyEdit(edit)
+        }
     });
-
-    context.subscriptions.push(disposable);
 }
 
-// this method is called when your extension is deactivated
-export function deactivate() {
+class ExceptionFormatter
+{
+    public static format(exceptionMessage: string): string{
+        // Return empty string on null input.
+        if(!exceptionMessage)
+            return '';
+
+        // Start off with all new lines removed.
+        var result = exceptionMessage.replace(/(\r\n|\r|\n)/g, '');
+
+        // The list of tokens to find and prepend new lines.
+        var replacementTokens = [
+            {
+                original: /   at/g,
+                replacement: '\n   at'
+            },
+            {
+                original: /\) at /g,
+                replacement: '\n at '
+            },
+            {
+                original: /--- End of inner exception stack trace ---/g, 
+                replacement: '\n   --- End of inner exception stack trace ---'
+            },
+            {
+              original: /--->/g,
+              replacement: '\n --->'
+            },
+            {
+                // Removes extra whitespace at the end of the lines.
+                original: /\s+\n/g, 
+                replacement: '\n'
+            },
+        ]
+
+        replacementTokens.forEach(token => {
+            result = result.replace(token.original, token.replacement);
+        });
+    
+        return result;
+    };
 }
