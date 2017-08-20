@@ -1,9 +1,9 @@
 {
     "name": "exception-formatter",
     "displayName": "Exception Formatter",
-    "description": "Formats Stack Traces",
+    "description": "Formats C# and Java Stack Traces.",
     "version": "0.0.1",
-    "publisher": "rafaci",
+    "publisher": "RadwanFaci",
     "engines": {
         "vscode": "^1.15.0"
     },
@@ -11,13 +11,13 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.formatException"
+        "onCommand:extension.formatStackTrace"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [{
-            "command": "extension.formatException",
-            "title": "Format Exception"
+            "command": "extension.formatStackTrace",
+            "title": "Format Stack Trace"
         }]
     },
     "scripts": {

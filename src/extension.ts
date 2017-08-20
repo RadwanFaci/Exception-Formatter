@@ -2,38 +2,38 @@ import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) 
 {
-    console.log('Exception Formatter Activated.');
+    console.log('Stack Trace Formatter Activated.');
 
-    vscode.commands.registerCommand('extension.formatException', () => {
+    vscode.commands.registerCommand('extension.formatStackTrace', () => {
         const {activeTextEditor} = vscode.window;
     
         if (activeTextEditor && activeTextEditor.document.languageId === 'plaintext') {
             const {document} = activeTextEditor;
-            const unformattedException = document.getText();
+            const unformattedStackTrace = document.getText();
 
-            const formattedException = ExceptionFormatter.format(unformattedException);
+            const formattedStackTrace = StackTraceFormatter.format(unformattedStackTrace);
 
             const edit = new vscode.WorkspaceEdit();
-            edit.delete(document.uri, new vscode.Range(document.positionAt(0), document.positionAt(unformattedException.length)));
-            edit.insert(document.uri, document.positionAt(0), formattedException)
-
-            return vscode.workspace.applyEdit(edit)
+            edit.delete(document.uri, new vscode.Range(document.positionAt(0), document.positionAt(unformattedStackTrace.length)));
+            edit.insert(document.uri, document.positionAt(0), formattedStackTrace)
+            vscode.workspace.applyEdit(edit)
+            activeTextEditor.selection = new vscode.Selection(document.positionAt(0), document.positionAt(0));
         }
     });
 }
 
-class ExceptionFormatter
+class StackTraceFormatter
 {
-    public static format(exceptionMessage: string): string{
+    public static format(stackTraceMessage: string): string{
         // Return empty string on null input.
-        if(!exceptionMessage)
+        if(!stackTraceMessage)
             return '';
 
         // Start off with all new lines removed.
-        var result = exceptionMessage.replace(/(\r\n|\r|\n)/g, '');
+        var result = stackTraceMessage.replace(/(\r\n|\r|\n)/g, '');
 
         // The list of tokens to find and prepend new lines.
-        var replacementTokens = [
+        const replacementTokens = [
             {
                 original: /   at/g,
                 replacement: '\n   at'
