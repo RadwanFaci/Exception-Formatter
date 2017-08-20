@@ -4,6 +4,9 @@
     "description": "Formats C# and Java Stack Traces.",
     "version": "0.0.1",
     "publisher": "RadwanFaci",
+    "repository": {
+        "url": "https://github.com/Hydrosis/Exception-Formatter"
+    },
     "engines": {
         "vscode": "^1.15.0"
     },
