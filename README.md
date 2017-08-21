@@ -1,4 +1,4 @@
-# Stack Trace Formetter
+# Stack Trace Formatter
 
 A simple extension to quickly format any C# and Java stack trace.
 
