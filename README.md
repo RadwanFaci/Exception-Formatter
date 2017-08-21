@@ -12,7 +12,7 @@ A simple extension to quickly format any C# and Java stack trace.
 
 ### 1.0.1
 
-* Add new lines after elipses (...) and 'Caused by' to improve Java stack trace formatting.
+* Add new lines after ellipses (...) and 'Caused by' to improve Java stack trace formatting.
 
 ### 1.0.0
 
