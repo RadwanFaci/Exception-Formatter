@@ -24,6 +24,16 @@ export function activate(context: vscode.ExtensionContext)
 
 class StackTraceFormatter
 {
+    // TODO: Format stack trace using regular expressions
+    public static regexFormat(stackTraceMessage: string): string
+    {
+        var result = '';
+
+        const stackTraceRegex = /Unhandled Exception:(.*?--->)+.*?( at.*)+/g;
+
+        return result;
+    }
+
     public static format(stackTraceMessage: string): string{
         // Return empty string on null input.
         if(!stackTraceMessage)
@@ -54,6 +64,14 @@ class StackTraceFormatter
                 // Removes extra whitespace at the end of the lines.
                 original: /\s+\n/g, 
                 replacement: '\n'
+            },
+            {
+                original: /Caused by:/g,
+                replacement: '\nCaused by:'
+            },
+            {
+                original: /   \.\.\. /g,
+                replacement: '\n   ... '
             },
         ]
 
