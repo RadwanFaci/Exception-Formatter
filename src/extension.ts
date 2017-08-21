@@ -29,7 +29,7 @@ class StackTraceFormatter
     {
         var result = '';
 
-        const stackTraceRegex = /Unhandled Exception:(.*?--->)+.*?( at.*)+/g;
+        const stackTraceRegex = /Unhandled Exception:(.*?)(--->.*?)*(( at .*? in .*?:line \d+)+(\s*--- End of inner exception stack trace ---\s*?)?)+/g;
 
         return result;
     }
