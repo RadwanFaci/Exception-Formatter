@@ -27,9 +27,13 @@ class StackTraceFormatter
     // TODO: Format stack trace using regular expressions
     public static regexFormat(stackTraceMessage: string): string
     {
-        var result = '';
+        if(!stackTraceMessage)
+            return '';
 
-        const stackTraceRegex = /Unhandled Exception:(.*?)(--->.*?)*(( at .*? in .*?:line \d+)+(\s*--- End of inner exception stack trace ---\s*?)?)+/g;
+        var result = this.removeNewLines(stackTraceMessage);
+        const stackTraceRegex = /(Unhandled Exception:.*?)(--->.*?)*(( at .*? in .*?:line \d+)+(\s*--- End of inner exception stack trace ---\s*?)?)+/;
+
+        var match = stackTraceRegex.exec(result);
 
         return result;
     }
@@ -40,13 +44,13 @@ class StackTraceFormatter
             return '';
 
         // Start off with all new lines removed.
-        var result = stackTraceMessage.replace(/(\r\n|\r|\n)/g, '');
+        var result = this.removeNewLines(stackTraceMessage);
 
         // The list of tokens to find and prepend new lines.
         const replacementTokens = [
             {
-                original: /   at/g,
-                replacement: '\n   at'
+                original: /---\s+at/g,
+                replacement: '---\n   at'
             },
             {
                 original: /\) at /g,
@@ -81,4 +85,9 @@ class StackTraceFormatter
     
         return result;
     };
+
+    private static removeNewLines(input: string): string
+    {
+        return input.replace(/(\r\n|\r|\n)/g, '');
+    }
 }
