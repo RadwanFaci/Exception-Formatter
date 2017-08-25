@@ -9,6 +9,9 @@ A simple extension to quickly format any C# and Java stack trace.
 ### Demo
 ![App Demo](demo.gif)
 
+### 1.0.3
+
+* Improve .NET stack trace formatting around `--- End of inner exception stack trace ---`
 
 ### 1.0.1
 
