@@ -22,7 +22,7 @@ export function activate(context: vscode.ExtensionContext)
     });
 }
 
-class StackTraceFormatter
+export class StackTraceFormatter
 {
     // TODO: Format stack trace using regular expressions
     public static regexFormat(stackTraceMessage: string): string
@@ -49,25 +49,20 @@ class StackTraceFormatter
         // The list of tokens to find and prepend new lines.
         const replacementTokens = [
             {
-                original: /---\s+at/g,
-                replacement: '---\n   at'
+                original: /---\s*at/g,
+                replacement: '---\n    at'
             },
             {
-                original: /\) at /g,
-                replacement: '\n at '
+                original: /\s+at /g,
+                replacement: '\n    at '
             },
             {
                 original: /--- End of inner exception stack trace ---/g, 
-                replacement: '\n   --- End of inner exception stack trace ---'
+                replacement: '\n    --- End of inner exception stack trace ---'
             },
             {
               original: /--->/g,
-              replacement: '\n --->'
-            },
-            {
-                // Removes extra whitespace at the end of the lines.
-                original: /\s+\n/g, 
-                replacement: '\n'
+              replacement: '\n  --->'
             },
             {
                 original: /Caused by:/g,
@@ -76,6 +71,11 @@ class StackTraceFormatter
             {
                 original: /   \.\.\. /g,
                 replacement: '\n   ... '
+            },
+            {
+                // This rule should be last. Removes extra whitespace at the end of the lines.
+                original: /\s+\n/g, 
+                replacement: '\n'
             },
         ]
 
