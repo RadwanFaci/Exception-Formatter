@@ -37,11 +37,9 @@
         "@types/mocha": "^2.2.32"
     },
     "keywords": [
-        "Stack Trace Formatter",
         "StackTraceFormatter",
-        ".NET",
-        "Stack Trace",
-        "ExceptionFormatter",
+        "Stack",
+        "Trace",
         "Exception",
         "Format"
     ]
