@@ -1,8 +1,8 @@
 {
     "name": "stack-trace-formatter",
     "displayName": "Stack Trace Formatter",
-    "description": "Formats C# and Java stack traces.",
-    "version": "1.0.5",
+    "description": "Formats C# (.NET) and Java stack traces.",
+    "version": "1.0.6",
     "publisher": "RadwanFaci",
     "repository": {
         "url": "https://github.com/Hydrosis/Exception-Formatter"
@@ -35,5 +35,14 @@
         "mocha": "^2.3.3",
         "@types/node": "^6.0.40",
         "@types/mocha": "^2.2.32"
-    }
+    },
+    "keywords": [
+        "Stack Trace Formatter",
+        "StackTraceFormatter",
+        ".NET",
+        "Stack Trace",
+        "ExceptionFormatter",
+        "Exception",
+        "Format"
+    ]
 }
